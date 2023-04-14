@@ -1,6 +1,6 @@
 "use strict";
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
+var chatName = document.getElementById("ChatName").innerHTML;
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 
@@ -15,6 +15,10 @@ connection.on("ReceiveMessage", function (user, message) {
     
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
+    connection.invoke("Join", chatName).catch(function (err) {
+        return console.error(err.toString());
+    });
+    console.log(chatName);
 }).catch(function (err) {
     return console.error(err.toString());
 });
@@ -22,17 +26,16 @@ connection.start().then(function () {
 document.getElementById("sendButton").addEventListener("click", function (event) {
     var user = document.getElementById("userInput").value;
     var message = document.getElementById("messageInput").value;
-    var chatName = document.getElementById("ChatName").value;
     connection.invoke("SendMessage", user, message, chatName).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
 });
 
-document.getElementById("Disconnect").addEventListener("click", function (event) {
-    var chatName = document.getElementById("ChatName").value;
-    connection.invoke("SendMessage", user, message, chatName).catch(function (err) {
-        return console.error(err.toString());
-    });
-    event.preventDefault();
-});
+//document.getElementById("Disconnect").addEventListener("click", function (event) {
+//    var chatName = document.getElementById("ChatName").value;
+//    connection.invoke("SendMessage", user, message, chatName).catch(function (err) {
+//        return console.error(err.toString());
+//    });
+//    event.preventDefault();
+//});
