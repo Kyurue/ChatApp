@@ -22,19 +22,24 @@ namespace ChatApp.Controllers
 
         public async Task<IActionResult> Index()
         {
+            //create list with chats
             return View(await _context.Chats.OrderByDescending(i => i.Id).ToListAsync());
         }
 
         //GET: Home/Chat/{Url}
         public IActionResult Chat(string? id)
         {
+            //Check if chat exists based on url
             var Chat = _context.Chats.Where(c => c.Url == id).FirstOrDefault();
             if (Chat != null)
             {
+                //save title in viewbag
                 ViewBag.Title = Chat.Title;
-                //return chatmessages
+
+                //Need to add chatmessages in the return view and show them in the view. 
                 return View();
             }
+            //redirect to home screen in case chat does not exist (Maybe add/provide error?)
             return Redirect("/");
         }
 

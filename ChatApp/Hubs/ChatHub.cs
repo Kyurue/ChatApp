@@ -4,18 +4,24 @@ namespace ChatApp.Hubs
 {
     public class ChatHub : Hub
     {
-        //public Task Join(string GroupId)
-        //{
-        //    return Groups.AddToGroupAsync(Context.ConnectionId, GroupId);
-        //}
-        //public async Task SendMessage(string message, string Groupname, string? user)
-        //{
-        //    await Clients.Group(Groupname).SendAsync("ReceiveMessage", user, message);
-        //}
+        //Add user to group 
+        public Task Join(string GroupId)
+        {
+            //find a way to connect to group in backend instead of frontend
+            return Groups.AddToGroupAsync(Context.ConnectionId, GroupId);
+        }
+        //Send message in group!
+        public async Task SendMessage(string message, string Groupname, string? user)
+        {
+            //if user = null, get user from identity (how? I don't know yet)
+            //Find a way to exclude the sender in receiving the message. 
+            await Clients.Group(Groupname).SendAsync("ReceiveMessage", user, message);
+        }
 
-        //public Task Disconnect(string Groupname)
-        //{
-        //    return Groups.RemoveFromGroupAsync(Context.ConnectionId, Groupname);
-        //}
+        //disconnect from group
+        public Task Disconnect(string Groupname)
+        {
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, Groupname);
+        }
     }
 }
