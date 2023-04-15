@@ -1,6 +1,6 @@
 "use strict";
 //build connection 
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //disable button temporarily
 document.getElementById("sendButton").disabled = true;
@@ -39,7 +39,7 @@ connection.start().then(function () {
 //Send message
 document.getElementById("sendButton").addEventListener("click", function (event) {
     //Get message
-    var message = document.getElementById("messageInput").value;
+    const message = document.getElementById("messageInput").value;
     //Send message and groupId, again I need to find a proper way of getting the groupId
     //connection.invoke("SendMessage", message, groupId).catch(function (err) {
     //    return console.error(err.toString());
