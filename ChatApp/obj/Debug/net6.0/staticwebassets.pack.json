@@ -17,10 +17,6 @@
       "PackagePath": "staticwebassets\\js\\chat.js"
     },
     {
-      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\chatlist.js",
-      "PackagePath": "staticwebassets\\js\\chatlist.js"
-    },
-    {
       "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\signalr\\dist\\browser\\signalr.js",
       "PackagePath": "staticwebassets\\js\\signalr\\dist\\browser\\signalr.js"
     },

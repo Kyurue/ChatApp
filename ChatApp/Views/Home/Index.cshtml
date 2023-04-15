@@ -1,10 +1,37 @@
-﻿@page
-<div class="container">
-    <table>
-        <tr id="ChatElement">
-            <td id="ChatName">test</td>
+﻿@model IEnumerable<ChatApp.Data.Chat>
+
+@{
+    ViewData["Title"] = "Chats";
+}
+
+<table>
+    <thead>
+        <tr style="border-bottom: 1px solid;">
+            <th style="width:200px">
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th style="width:50px">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th style="width:150px">
+                Status
+            </th>
         </tr>
-    </table>
-</div>
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chatlist.js"></script>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="border-bottom: 1px solid gray;">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a asp-area="" asp-controller="Home" asp-action="Chat" asp-route-id="@item.Url">Ga naar chat!</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

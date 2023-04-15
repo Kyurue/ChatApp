@@ -4,6 +4,7 @@ using ChatApp.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230415000325_initData")]
+    partial class initData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,9 +102,6 @@ namespace ChatApp.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<bool>("LoggedInOnly")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -127,18 +126,16 @@ namespace ChatApp.Migrations
                         {
                             Id = 1,
                             Description = "Dit is een chat om te testen",
-                            LoggedInOnly = false,
                             Title = "TestChat",
-                            Url = "b722323f3b",
+                            Url = "21ea1d5a92",
                             UserId = "e957327f-7b1d-4c97-bfca-b3ae57506a69"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Dit is een extra chatje om te testen",
-                            LoggedInOnly = false,
                             Title = "TestChatje",
-                            Url = "dbd73e9a22",
+                            Url = "9cdb30c13f",
                             UserId = "e957327f-7b1d-4c97-bfca-b3ae57506a69"
                         });
                 });

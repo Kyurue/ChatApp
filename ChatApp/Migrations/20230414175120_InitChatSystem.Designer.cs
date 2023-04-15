@@ -4,6 +4,7 @@ using ChatApp.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230414175120_InitChatSystem")]
+    partial class InitChatSystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,16 +99,11 @@ namespace ChatApp.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("LoggedInOnly")
-                        .HasColumnType("bit");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -121,26 +118,6 @@ namespace ChatApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Chats");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Dit is een chat om te testen",
-                            LoggedInOnly = false,
-                            Title = "TestChat",
-                            Url = "b722323f3b",
-                            UserId = "e957327f-7b1d-4c97-bfca-b3ae57506a69"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Dit is een extra chatje om te testen",
-                            LoggedInOnly = false,
-                            Title = "TestChatje",
-                            Url = "dbd73e9a22",
-                            UserId = "e957327f-7b1d-4c97-bfca-b3ae57506a69"
-                        });
                 });
 
             modelBuilder.Entity("ChatApp.Data.ChatMessage", b =>
@@ -156,8 +133,7 @@ namespace ChatApp.Migrations
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

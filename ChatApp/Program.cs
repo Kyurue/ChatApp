@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ChatApp.Areas.Identity.Data;
 using ChatApp.Hubs;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -31,15 +33,15 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication();
+
+app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub");
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapRazorPages();
-app.MapHub<ChatHub>("/chatHub");
+    pattern: "{controller=Home}/{action=Index}/{id?}");;
 
 app.Run();

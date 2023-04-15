@@ -1,33 +1,128 @@
 ﻿@page
-<div class="container">
-    <table>
-        <tr id="ChatElement">
-            <td id="ChatName">test</td>
-        </tr>
-    </table>
-    <div class="row p-1">
-        <div class="col-1">User</div>
-        <div class="col-5"><input type="text" id="userInput" /></div>
-    </div>
-    <div class="row p-1">
-        <div class="col-1">Message</div>
-        <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
-    </div>
-    <div class="row p-1">
-        <div class="col-6 text-end">
-            <input type="button" id="sendButton" value="Send Message" />
+<div class="chatContainer">
+    <div class="chat">
+        <div class="chatHeader">
+            <h1>@ViewBag.Title</h1>
         </div>
-    </div>
-    <div class="row p-1">
-        <div class="col-6">
-            <hr />
+        <div class="chatBody">
+            <p class="message">Hello</p>
+            <p class="message userMessage">Hi, dit is een test bericht, ik wil even testen wat er gebeurd zodra dit bericht vrij lang word :o</p>
+            <p class="message">Waaa echt??? omgg nu moeten we de chat opvullen voor een scrollbar!</p>
+            <p class="message">Hallo?</p>
+            <p class="message userMessage">Sorry voor de late reactie, of was dit ook een test?</p>
+            <p class="message">Oohhhh I see I see</p>
         </div>
-    </div>
-    <div class="row p-1">
-        <div class="col-6">
-            <ul id="messagesList"></ul>
+        <div class="chatFooter">
+            <input class="messageInput" type="text" id="messageInput" name="" />
+            <input class="sendButton" type="button" id="sendButton" value="Send Message" />
         </div>
     </div>
 </div>
+<script>var groupId = '@ViewBag.Id'</script>
+
+<style>
+
+    .chatContainer {
+        height: 80vh;
+        background-color: #f8f8f8;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.4);
+        border-radius: 15px 15px 15px 15px;
+    }
+
+    .chat {
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        border-radius: 15px 15px 15px 15px;
+        background-color: dodgerblue;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%239C92AC' fill-opacity='0.25' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"), linear-gradient(to right top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5));
+    }
+
+    .chatHeader {
+        background-color: dodgerblue;
+        background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+        border-radius: 15px 15px 0px 0px;
+    }
+
+    .chatHeader h1 {
+        color: white;
+        padding: 15px;
+    }
+
+    .chatBody {
+        flex: 1;
+        padding: 20px 30px;
+        overflow-y: scroll;
+    }
+
+    .message {
+        background-color: dodgerblue;
+        padding: 10px;
+        color: white;
+        width:fit-content;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        max-width: 50%;
+    }
+
+    .userMessage {
+        margin-left: auto;
+        background-color: white;
+        color: black;
+    }
+
+    .chatFooter {
+        display: flex;
+        background-color: dodgerblue;
+        border-radius: 0px 0px 15px 15px;
+        background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+        padding: 15px;
+    }
+
+    .messageInput {
+        flex: 1;
+        height: 40px;
+        border: none;
+        outline: none;
+        margin-right: 15px;
+        font-size: 16px;
+        border-radius: 5px 5px 5px 5px;
+    }
+
+    .sendButton {
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: dodgerblue;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px 5px 5px 5px;
+    }
+
+    .sendButton:hover {
+        background: rgba(0, 100, 250, 0.7);
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.4)
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.6)
+    }
+</style>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>

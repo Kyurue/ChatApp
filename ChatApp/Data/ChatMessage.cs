@@ -7,16 +7,18 @@ namespace ChatApp.Data
     public class ChatMessage
     {
         [Key]
-        private int Id { get; set; }
-        private string? UserId { get; set; }
-        private int ChatId { get; set; }
-        private string Message { get; set; }
+        public int Id { get; set; }
+        public string? UserId { get; set; }
+        public int ChatId { get; set; }
+        [Required]
+        [MaxLength(1000)]
+        public string Message { get; set; }
 
         [ForeignKey(nameof(ChatId))]
         public virtual Chat Chat { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public virtual IdentityUser IdentityUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
     }
 }
