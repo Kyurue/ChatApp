@@ -6,16 +6,11 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 document.getElementById("sendButton").disabled = true;
 
 //receive message
-connection.on("ReceiveMessage", function (user, message) {
-    //Add message with user & message on the left side of the chat (receiver pov)
+connection.on("ReceiveMessage", function (user, message, isSender) {
+    //Add message with user & message on the left side of the chat (receiver pov) or if isSender = true to right side of chat (sender Pov)
     //This method is only for people receiving the message, not for the sender
     //Still need to make js components for this. 
 });
-
-function Sendmessage(message) {
-    //add message on the right side of the chat (sender pov)
-    //still need to make js components for this
-}
 
 //if connection is ready
 connection.start().then(function () {
@@ -41,9 +36,6 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     //connection.invoke("SendMessage", message, groupId).catch(function (err) {
     //    return console.error(err.toString());
     //});
-
-    //send message to sender pov. 
-    Sendmessage(message);
 
     event.preventDefault();
 });
