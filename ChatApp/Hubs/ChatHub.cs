@@ -14,7 +14,7 @@ namespace ChatApp.Hubs
         public async Task SendMessage(string message, string Groupname, string? user)
         {
             //if user = null, get user from identity (how? I don't know yet)
-            //Find a way to exclude the sender in receiving the message. 
+            if (user == null) user = Environment.UserName;
             await Clients.OthersInGroup(Groupname).SendAsync("ReceiveMessage", user, message, false);
             await Clients.Caller.SendAsync("ReceiveMessage", user, message, true); ;
         }
