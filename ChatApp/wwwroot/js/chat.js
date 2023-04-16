@@ -1,4 +1,23 @@
 "use strict";
+import { template } from "/js/modules/template.js";
+import { Message } from "/js/components/message.js";
+import { SenderMessage } from "/js/components/senderMessage.js";
+
+
+//attach templates
+template.attachTemplates();
+const chat = document.getElementById("chat");
+myArray.forEach((element) => {
+    if (element.userId) {
+        chat.appendChild(new Message(element.message, element.time.split(' ')[1], element.userId));
+    } else {
+        chat.appendChild(new SenderMessage(element.message, element.time.split(' ')[1], element.userId));
+    }
+});
+
+
+
+
 //build connection 
 const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
@@ -6,17 +25,11 @@ const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build(
 document.getElementById("sendButton").disabled = true;
 
 //receive message
-connection.on("ReceiveMessage", function (message, user = null) {
+connection.on("ReceiveMessage", function (message, time, user = null) {
     if (user) {
-        //Add message with user & message on the left side of the chat (receiver pov) or if user = null right side of chat (Sender POV)
-        //This method is only for people receiving the message, not for the sender
-        //Still need to make js components for this. 
-        //add receiver message (message = message, user = user)
+        chat.appendChild(new Message(`${message}`, `${time.split(' ')[1]}`, `${user}`));
     } else {
-        //Add message with user & message on the right side of chat (Sender POV)
-        //This method is only for people receiving the message, not for the sender
-        //Still need to make js components for this. 
-        //add sender message (message = message, user = "you")
+        chat.appendChild(new SenderMessage(`${message}`, `${time.split(' ')[1]}`));
     }
 });
 

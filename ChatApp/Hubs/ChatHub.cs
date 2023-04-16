@@ -15,8 +15,9 @@ namespace ChatApp.Hubs
         {
             //if user = null, get user from identity (how? I don't know yet)
             if (user == null) user = Environment.UserName;
-            await Clients.OthersInGroup(Groupname).SendAsync("ReceiveMessage", user, message, false);
-            await Clients.Caller.SendAsync("ReceiveMessage", user, message, true); ;
+            var time = DateTime.Now;
+            await Clients.OthersInGroup(Groupname).SendAsync("ReceiveMessage", message, time, user);
+            await Clients.Caller.SendAsync("ReceiveMessage", message, time, user); ;
         }
 
         //disconnect from group

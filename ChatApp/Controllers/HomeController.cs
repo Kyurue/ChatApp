@@ -1,4 +1,5 @@
 ﻿using ChatApp.Areas.Identity.Data;
+using ChatApp.Data;
 using ChatApp.Hubs;
 using ChatApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace ChatApp.Controllers
 {
@@ -35,9 +37,7 @@ namespace ChatApp.Controllers
             {
                 //save title in viewbag
                 ViewBag.Title = Chat.Title;
-
-                //Need to add chatmessages in the return view and show them in the view. 
-                return View(await _context.ChatMessages.Where(m => m.ChatId == Chat.Id).ToListAsync());
+                return View();
             }
             //redirect to home screen in case chat does not exist (Maybe add/provide error?)
             return Redirect("/");
