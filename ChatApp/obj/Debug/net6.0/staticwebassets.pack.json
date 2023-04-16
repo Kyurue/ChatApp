@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\ChatApp.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\css\\chat.css",
+      "PackagePath": "staticwebassets\\css\\chat.css"
+    },
+    {
+      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\css\\components\\message.css",
+      "PackagePath": "staticwebassets\\css\\components\\message.css"
+    },
+    {
+      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\css\\components\\senderMessage.css",
+      "PackagePath": "staticwebassets\\css\\components\\senderMessage.css"
+    },
+    {
       "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -13,8 +25,24 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\Component.js",
+      "PackagePath": "staticwebassets\\js\\Component.js"
+    },
+    {
       "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\chat.js",
       "PackagePath": "staticwebassets\\js\\chat.js"
+    },
+    {
+      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\components\\message.js",
+      "PackagePath": "staticwebassets\\js\\components\\message.js"
+    },
+    {
+      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\components\\senderMessage.js",
+      "PackagePath": "staticwebassets\\js\\components\\senderMessage.js"
+    },
+    {
+      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\modules\\template.js",
+      "PackagePath": "staticwebassets\\js\\modules\\template.js"
     },
     {
       "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\signalr\\dist\\browser\\signalr.js",
