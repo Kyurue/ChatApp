@@ -6,12 +6,34 @@
             <h1>@ViewBag.Title</h1>
         </div>
         <div class="chatBody">
-            <p class="message">Hello</p>
-            <p class="message userMessage">Hi, dit is een test bericht, ik wil even testen wat er gebeurd zodra dit bericht vrij lang word :o</p>
-            <p class="message">Waaa echt??? omgg nu moeten we de chat opvullen voor een scrollbar!</p>
-            <p class="message">Hallo?</p>
-            <p class="message userMessage">Sorry voor de late reactie, of was dit ook een test?</p>
-            <p class="message">Oohhhh I see I see</p>
+            <div class="chatMessage">
+                <p class="username">User1</p>
+                <p class="message">Hello</p>
+                <p class="time">17:09</p>
+            </div>
+            <div class="chatMessage userMessage">
+                <p class="message">Hi, dit is een test bericht, ik wil even testen wat er gebeurd zodra dit bericht vrij lang word :o</p>
+                <p class="time">17:09</p>
+            </div>
+            <div class="chatMessage">
+                <p class="username">User2</p>
+                <p class="message">Waaa echt??? omgg nu moeten we de chat opvullen voor een scrollbar!</p>
+                <p class="time">17:09</p>
+            </div>
+            <div class="chatMessage">
+                <p class="username">User2</p>
+                <p class="message">Hallo???? :o</p>
+                <p class="time">17:09</p>
+            </div>
+            <div class="chatMessage userMessage">
+                <p class="message">Sorry voor de late reactie, of was dit ook een test?</p>
+                <p class="time">17:09</p>
+            </div>
+            <div class="chatMessage">
+                <p class="username">User2</p>
+                <p class="message">Oohhhh I see I see</p>
+                <p class="time">17:09</p>
+            </div>
         </div>
         <div class="chatFooter">
             <input class="messageInput" type="text" id="messageInput" name="" />
@@ -56,14 +78,37 @@
         overflow-y: scroll;
     }
 
-    .message {
-        background-color: dodgerblue;
-        padding: 10px;
-        color: white;
-        width:fit-content;
-        border-radius: 10px;
+    .chatMessage {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         margin-bottom: 10px;
         max-width: 50%;
+        background-color: dodgerblue;
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+        width: fit-content;
+        position: relative;
+    }
+
+    .username {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .message {
+        margin: 0;
+        padding-bottom: 5px; /* add 20px of padding to the bottom */
+    }
+
+    .time {
+        font-size: 12px;
+        color: black;
+        margin: 0;
+        position: absolute;
+        bottom: -3px; /* add some space below the message */
+        right: 5px; /* adjust the right property as needed */
     }
 
     .userMessage {
