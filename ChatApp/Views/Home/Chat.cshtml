@@ -6,7 +6,10 @@
             <h1>@ViewBag.Title</h1>
         </div>
         <div class="chatBody" id="chat">
-         
+            @foreach(var item in Model)
+            {
+                
+            }
         </div>
         <div class="chatFooter">
             <input class="messageInput" type="text" id="messageInput" name="" />
@@ -14,6 +17,15 @@
         </div>
     </div>
 </div>
+<script>
+    var myArray = [];
+    @foreach (var d in Model)
+    {
+        @:myArray.push({ message: "@d.Message", time: "@d.CreatedAt", userId: "@d.UserId" });
+    }
+
+    console.log(myArray);
+</script>
 <script type="module" src="~/js/Component.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>
