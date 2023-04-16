@@ -1,4 +1,4 @@
-﻿@page
+﻿@model IEnumerable<ChatApp.Data.ChatMessage>
 @*TODO: make js components for the messages & add leave group button.*@
 <div class="chatContainer">
     <div class="chat">
@@ -6,7 +6,15 @@
             <h1>@ViewBag.Title</h1>
         </div>
         <div class="chatBody">
-            <div class="chatMessage">
+            @foreach(var item in Model)
+            {
+                <div class="chatMessage">
+                    <p class="username"> @Html.DisplayFor(modelItem => item.UserId)</p>
+                    <p class="message"> @Html.DisplayFor(modelItem => item.Message)</p>
+                    <p class="time"> @Html.DisplayFor(modelItem => item.CreatedAt)</p>
+                </div>
+            }
+           @* <div class="chatMessage">
                 <p class="username">User1</p>
                 <p class="message">Hello</p>
                 <p class="time">17:09</p>
@@ -33,7 +41,7 @@
                 <p class="username">User2</p>
                 <p class="message">Oohhhh I see I see</p>
                 <p class="time">17:09</p>
-            </div>
+            </div>*@
         </div>
         <div class="chatFooter">
             <input class="messageInput" type="text" id="messageInput" name="" />
@@ -93,6 +101,7 @@
     }
 
     .username {
+        margin: 0;
         font-weight: bold;
         margin-bottom: 5px;
     }

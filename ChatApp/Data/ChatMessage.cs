@@ -14,6 +14,8 @@ namespace ChatApp.Data
         [MaxLength(1000)]
         public string Message { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
         [ForeignKey(nameof(ChatId))]
         public virtual Chat Chat { get; set; }
 

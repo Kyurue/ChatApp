@@ -27,7 +27,7 @@ namespace ChatApp.Controllers
         }
 
         //GET: Home/Chat/{Url}
-        public IActionResult Chat(string? id)
+        public async Task<IActionResult> Chat(string? id)
         {
             //Check if chat exists based on url
             var Chat = _context.Chats.Where(c => c.Url == id).FirstOrDefault();
@@ -37,7 +37,7 @@ namespace ChatApp.Controllers
                 ViewBag.Title = Chat.Title;
 
                 //Need to add chatmessages in the return view and show them in the view. 
-                return View();
+                return View(await _context.ChatMessages.Where(m => m.ChatId == Chat.Id).ToListAsync());
             }
             //redirect to home screen in case chat does not exist (Maybe add/provide error?)
             return Redirect("/");
