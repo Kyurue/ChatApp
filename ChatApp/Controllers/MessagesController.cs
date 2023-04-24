@@ -27,19 +27,24 @@ namespace ChatApp.Controllers
                 return NotFound();
             }
 
-            //select the username of the first message
             var messages = await _context.ChatMessages
-                .Include(m => m.ApplicationUser)
-                .Where(m => m.ChatId == chat.Id)
-                .Select(m => new MessageViewModel
-                {
-                    Message = m.Message,
-                    CreatedAt = m.CreatedAt,
-                    Username = m.ApplicationUser.UserName
-                })
-                .ToListAsync();
+            .Include(m => m.ApplicationUser)
+            .Where(m => m.ChatId == chat.Id)
+            .ToListAsync();
 
-            return Ok(messages);
+            var userIds = messages.Select(x => x.UserId).ToArray();
+            var users = await _context.Users
+                .Where(x => userIds.Contains(x.Id))
+                .ToDictionaryAsync(x => x.Id, x => x);
+
+            var viewModels = messages.Select(x => new MessageViewModel
+            {
+                Message = x.Message,
+                CreatedAt = x.CreatedAt,
+                Username = users.GetValueOrDefault(x.UserId)?.UserName
+            });
+
+            return Ok(viewModels);
         }
     }
 }
