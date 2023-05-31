@@ -7,16 +7,10 @@ import { SenderMessage } from "/js/components/senderMessage.js";
 //attach templates
 template.attachTemplates();
 const chat = document.getElementById("chat");
-myArray.forEach((element) => {
-    if (element.userId) {
-        chat.appendChild(new Message(element.message, element.time.split(' ')[1], element.userId));
-    } else {
-        chat.appendChild(new SenderMessage(element.message, element.time.split(' ')[1], element.userId));
-    }
-});
 
-
-
+const url = window.location.href.replace(/\/$/, '');
+const lastSeg = url.substring(url.lastIndexOf('/') + 1);
+const groupId = lastSeg.substring(0, 10);
 
 //build connection 
 const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
@@ -27,22 +21,31 @@ document.getElementById("sendButton").disabled = true;
 //receive message
 connection.on("ReceiveMessage", function (message, time, user = null) {
     if (user) {
-        chat.appendChild(new Message(`${message}`, `${time.split(' ')[1]}`, `${user}`));
+        chat.appendChild(new Message(message, (time.split('T')[1]).slice(0, 8), user));
     } else {
-        chat.appendChild(new SenderMessage(`${message}`, `${time.split(' ')[1]}`));
+        chat.appendChild(new SenderMessage(message, (time.split('T')[1]).slice(0, 8)));
     }
 });
 
 //if connection is ready
-connection.start().then(function () {
+connection.start().then(async () => {
     //enable send button
     document.getElementById("sendButton").disabled = false;
 
-    //join group -> Might change this to backend
-    //Need to find a way to get the groupId based on the database value (Viewbag?)
-    //connection.invoke("Join", groupId).catch(function (err) {
-    //    return console.error(err.toString());
-    //});
+    const response = await fetch(`/api/messages/${groupId}`);
+    const data = await response.json();
+
+    data.forEach((element) => {
+        if (element["username"]) {
+            chat.appendChild(new Message(element["message"], (element["createdAt"].split('T')[1]).slice(0, 8), element["username"]));
+        } else {
+            chat.appendChild(new SenderMessage(element["message"], (element["createdAt"].split('T')[1]).slice(0, 8)));
+        }
+    });
+
+    connection.invoke("Join", groupId).catch(function (err) {
+        return console.error(err.toString());
+    });
 
 //catch if fails
 }).catch(function (err) {
@@ -53,10 +56,10 @@ connection.start().then(function () {
 document.getElementById("sendButton").addEventListener("click", function (event) {
     //Get message
     const message = document.getElementById("messageInput").value;
-    //Send message and groupId, again I need to find a proper way of getting the groupId
-    //connection.invoke("SendMessage", message, groupId).catch(function (err) {
-    //    return console.error(err.toString());
-    //});
+
+    connection.invoke("SendMessage", message, groupId).catch(function (err) {
+        return console.error(err.toString());
+    });
 
     event.preventDefault();
 });
