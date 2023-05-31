@@ -42,11 +42,6 @@ class Message extends HTMLElement {
         this.shadowRoot.appendChild(linkElem);
     }
 
-    attributeChangedCallback(property, oldValue, newValue) {
-        if (oldValue === newValue) return;
-        this[property] = newValue;
-    }
-
     setState(key, value) {
         this.state[key] = value;
         this.updateBinding(key);

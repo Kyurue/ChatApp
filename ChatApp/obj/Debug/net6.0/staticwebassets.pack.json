@@ -37,6 +37,10 @@
       "PackagePath": "staticwebassets\\js\\components\\senderMessage.js"
     },
     {
+      "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\error.js",
+      "PackagePath": "staticwebassets\\js\\error.js"
+    },
+    {
       "Id": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\modules\\template.js",
       "PackagePath": "staticwebassets\\js\\modules\\template.js"
     },

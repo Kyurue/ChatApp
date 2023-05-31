@@ -33,17 +33,30 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData["error"] != null)
+            {
+                <div class="alert alert-danger" id="dangerAlert">
+                    <strong>@TempData["error"]</strong>
+                </div>
+            }
+            @if (TempData["success"] != null)
+            {
+                <div class="alert alert-success" id="successAlert">
+                    <strong>@TempData["success"]</strong>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - ChatApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - ChatApp 
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="~/js/error.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

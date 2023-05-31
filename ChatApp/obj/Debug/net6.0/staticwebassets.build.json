@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4B8eCg81DCZoSJNwo19Q8APNtRYYZWJiJIYiD1qepzM=",
+  "Hash": "Nd524gNBXsD3NtLw9GCUsnePA0aA1M/+76BgciTtGbQ=",
   "Source": "ChatApp",
   "BasePath": "_content/ChatApp",
   "Mode": "Default",
@@ -1205,6 +1205,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\components\\senderMessage.js"
+    },
+    {
+      "Identity": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\error.js",
+      "SourceId": "ChatApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\",
+      "BasePath": "_content/ChatApp",
+      "RelativePath": "js/error.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\error.js"
     },
     {
       "Identity": "C:\\Users\\migl3\\Documents\\1.server\\ChatApp\\ChatApp\\wwwroot\\js\\modules\\template.js",

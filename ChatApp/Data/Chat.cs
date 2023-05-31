@@ -22,7 +22,7 @@ namespace ChatApp.Data
         public bool LoggedInOnly { get; set; } = false;
 
         [InverseProperty("Chat")]
-        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
+        public virtual ICollection<ChatMessage>? ChatMessages { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser ApplicationUser { get; set; }

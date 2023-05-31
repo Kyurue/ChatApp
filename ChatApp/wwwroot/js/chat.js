@@ -12,7 +12,7 @@ const url = window.location.href.replace(/\/$/, '');
 const lastSeg = url.substring(url.lastIndexOf('/') + 1);
 const groupId = lastSeg.substring(0, 10);
 
-//build connection 
+//build signalr connection 
 const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //disable button temporarily

@@ -25,17 +25,17 @@ namespace ChatApp.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             //create list with chats
-            return View(await _context.Chats.OrderByDescending(i => i.Id).ToListAsync());
+            return View( _context.Chats.OrderByDescending(i => i.Id).ToList());
         }
 
         //GET: Home/Chat/{Url}
-        public async Task<IActionResult> Chat(string? id)
+        public IActionResult Chat(string? id)
         {
             //Check if chat exists based on url
-            if(_userManager.GetUserId(HttpContext.User) != null)
+            if (_userManager.GetUserId(HttpContext.User) != null)
             {
                 var Chat = _context.Chats.Where(c => c.Url == id).FirstOrDefault();
                 if (Chat != null)
@@ -47,6 +47,7 @@ namespace ChatApp.Controllers
                 //redirect to home screen in case chat does not exist (Maybe add/provide error?)
                 return Redirect("/");
             }
+            TempData["error"] = "You need to be logged in to view this page!";
             return Redirect("/");
         }
 

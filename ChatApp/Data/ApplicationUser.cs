@@ -6,9 +6,9 @@ namespace ChatApp.Data
     public class ApplicationUser : IdentityUser
     {
         [InverseProperty("ApplicationUser")]
-        public virtual ICollection<ChatMessage> ChatMessages { get; set; }
+        public virtual ICollection<ChatMessage>? ChatMessages { get; set; }
 
         [InverseProperty("ApplicationUser")]
-        public virtual ICollection<Chat> Chats { get; set; }
+        public virtual ICollection<Chat>? Chats { get; set; }
     }
 }
