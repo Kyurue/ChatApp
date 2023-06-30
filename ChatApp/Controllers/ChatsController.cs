@@ -20,15 +20,22 @@ namespace ChatApp.Controllers
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// Create a new chat
+        /// </summary>
+        /// <returns>create view</returns>
         // GET: Chats/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        /// <summary>
+        /// Create a new chat
+        /// </summary>
+        /// <param name="chat"></param>
+        /// <returns>View with chat</returns>
         // POST: Chats/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,Title,Description,Url,LoggedInOnly")] Chat chat)
@@ -45,22 +52,31 @@ namespace ChatApp.Controllers
             return View(chat);
         }
 
+        /// <summary>
+        /// Delete a chat
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>home page</returns>
         // POST: Chats/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var chat = await _context.Chats.FindAsync(id);
+            if (chat != null)
+            {
+                _context.Chats.Remove(chat);
+            }
+            
             //get userrole of logged in user as string
             var user = await _userManager.GetUserAsync(User);
-            var userRole = await _userManager.GetRolesAsync(user);
-            var userRoleString = userRole[0].ToString();
-            if (_userManager.GetUserId(User) != null && userRoleString == "Admin" || userRoleString == "Moderator")
+
+            if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Moderator") || user.Id == chat.UserId)
             {
                 if (_context.Chats == null)
                 {
                     return Problem("Entity set 'ApplicationDbContext.Chats'  is null.");
                 }
-                var chat = await _context.Chats.FindAsync(id);
                 if (chat != null)
                 {
                     _context.Chats.Remove(chat);
@@ -74,6 +90,11 @@ namespace ChatApp.Controllers
             return Redirect("/");
         }
 
+        /// <summary>
+        /// Generate random chat id
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns>chat id</returns>
         public static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

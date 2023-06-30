@@ -1,5 +1,4 @@
-﻿using ChatApp.Data;
-using ChatApp.Models;
+﻿using ChatApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -92,7 +91,7 @@ namespace ChatApp.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         private async Task<IActionResult> Delete(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);

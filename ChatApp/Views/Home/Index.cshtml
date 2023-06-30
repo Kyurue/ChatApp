@@ -41,32 +41,35 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr style="border-bottom: 1px solid gray;">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Chat" asp-route-id="@item.Url">Join</a>
-                </td>
-                <td>
-                    @if (User.Identity != null && User.Identity.IsAuthenticated) 
-                    {
-                        <form method="post" asp-area="" asp-controller="Chats" asp-action="Delete" asp-route-id="@item.Id">
-                        @if (User.IsInRole("Moderator") || User.IsInRole("Admin") || @ViewBag.UserId == item.UserId)
+            @if(item.LoggedInOnly == false || (item.LoggedInOnly == true && User.Identity != null && User.Identity.IsAuthenticated))
+            {
+                <tr style="border-bottom: 1px solid gray;">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Chat" asp-route-id="@item.Url">Join</a>
+                    </td>
+                    <td>
+                        @if (User.Identity != null && User.Identity.IsAuthenticated) 
                         {
-                            <input type="submit" value="Delete" class="btn btn-primary"/>
-                        } else
-                        {
-                            <input type="submit" value="Delete" class="btn btn-primary" disabled />
+                            <form method="post" asp-area="" asp-controller="Chats" asp-action="Delete" asp-route-id="@item.Id">
+                            @if (User.IsInRole("Moderator") || User.IsInRole("Admin") || @ViewBag.UserId == item.UserId)
+                            {
+                                <input type="submit" value="Delete" class="btn btn-primary"/>
+                            } else
+                            {
+                                <input type="submit" value="Delete" class="btn btn-primary" disabled />
+                            }
+                            </form>
                         }
-                        </form>
-                    }
-                </td>
+                    </td>
                     
-            </tr>
+                </tr>
+            }
         }
     </tbody>
 </table>

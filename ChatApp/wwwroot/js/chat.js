@@ -15,9 +15,6 @@ const groupId = lastSeg.substring(0, 10);
 //build signalr connection 
 const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-//disable button temporarily
-document.getElementById("sendButton").disabled = true;
-
 //receive message
 connection.on("ReceiveMessage", function (message, time, user = null) {
     if (user) {
@@ -29,8 +26,6 @@ connection.on("ReceiveMessage", function (message, time, user = null) {
 
 //if connection is ready
 connection.start().then(async () => {
-    document.getElementById("sendButton").disabled = false;
-
     const response = await fetch(`/api/messages/${groupId}`);
     const data = await response.json();
 
@@ -54,11 +49,17 @@ connection.start().then(async () => {
 });
 
 //Send message
-document.getElementById("sendButton").addEventListener("click", function (event) {
+document.getElementById("sendButton").addEventListener("click", function (event) {    
     const message = document.getElementById("messageInput").value;
+    if (isEmptyOrSpaces(message)) return;
     connection.invoke("SendMessage", message, groupId).catch(function (err) {
         return console.error(err.toString());
     });
+    document.getElementById("messageInput").value = "";
 
     event.preventDefault();
 });
+
+function isEmptyOrSpaces(str) {
+    return str === null || str.match(/^ *$/) !== null;
+}

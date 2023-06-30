@@ -20,6 +20,10 @@ namespace ChatApp.Controllers
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Home page
+        /// </summary>
+        /// <returns>The home page view</returns>
         public IActionResult Index()
         {
             //create list with chats
@@ -27,6 +31,11 @@ namespace ChatApp.Controllers
             return View( _context.Chats.OrderByDescending(i => i.Id).ToList());
         }
 
+        /// <summary>
+        /// Chat page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Chat view</returns>
         //GET: Home/Chat/{Url}
         public IActionResult Chat(string? id)
         {
