@@ -1,14 +1,9 @@
 ﻿using ChatApp.Areas.Identity.Data;
 using ChatApp.Data;
-using ChatApp.Hubs;
 using ChatApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol;
 using System.Diagnostics;
-using System.Security.Claims;
 
 namespace ChatApp.Controllers
 {
@@ -28,27 +23,31 @@ namespace ChatApp.Controllers
         public IActionResult Index()
         {
             //create list with chats
+            ViewBag.UserId = _userManager.GetUserId(User);
             return View( _context.Chats.OrderByDescending(i => i.Id).ToList());
         }
 
         //GET: Home/Chat/{Url}
         public IActionResult Chat(string? id)
         {
-            //Check if chat exists based on url
-            if (_userManager.GetUserId(HttpContext.User) != null)
-            {
+                //Check if chat exists based on url
                 var Chat = _context.Chats.Where(c => c.Url == id).FirstOrDefault();
                 if (Chat != null)
                 {
+                    if (_userManager.GetUserId(User) == null)
+                    {
+                        ViewBag.NoUser = true;
+                    } else
+                    {
+                        ViewBag.NoUser = false;
+                    }
                     //save title in viewbag
                     ViewBag.Title = Chat.Title;
                     return View();
                 }
                 //redirect to home screen in case chat does not exist (Maybe add/provide error?)
+                TempData["error"] = "Chat does not exist!";
                 return Redirect("/");
-            }
-            TempData["error"] = "You need to be logged in to view this page!";
-            return Redirect("/");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

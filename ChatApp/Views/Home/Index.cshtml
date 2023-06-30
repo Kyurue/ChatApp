@@ -4,18 +4,38 @@
     ViewData["Title"] = "Chats";
 }
 
+<div class="jumbotron">
+    <h1 class="display-4 text-center">Chat Overview</h1>
+    <p class="lead text-center">This is the overview of the all of the chats!</p>
+    <hr class="my-4">
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <p class="text-center">You can create your own chat now!</p>
+        <p class="lead text-center">
+            <a asp-controller="Chats" asp-action="Create" class="btn btn-primary btn-lg" role="button">Create Chat</a>
+        </p>
+    }
+</div>
 @*Add crud to create chats + style this screen.*@
 
-<table>
+<table class="table table-striped">
     <thead>
-        <tr style="border-bottom: 1px solid;">
-            <th style="width:200px">
+        <tr>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th style="width:50px">
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th style="width:150px"></th>
+            <th scope="col">
+                Join now!
+            </th>
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <th scope="col">
+                    Delete
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -29,8 +49,23 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-area="" asp-controller="Home" asp-action="Chat" asp-route-id="@item.Url">Ga naar chat!</a>
+                    <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Chat" asp-route-id="@item.Url">Join</a>
                 </td>
+                <td>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated) 
+                    {
+                        <form method="post" asp-area="" asp-controller="Chats" asp-action="Delete" asp-route-id="@item.Id">
+                        @if (User.IsInRole("Moderator") || User.IsInRole("Admin") || @ViewBag.UserId == item.UserId)
+                        {
+                            <input type="submit" value="Delete" class="btn btn-primary"/>
+                        } else
+                        {
+                            <input type="submit" value="Delete" class="btn btn-primary" disabled />
+                        }
+                        </form>
+                    }
+                </td>
+                    
             </tr>
         }
     </tbody>

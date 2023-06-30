@@ -17,7 +17,7 @@ namespace ChatApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.19")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -44,11 +44,9 @@ namespace ChatApp.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -56,35 +54,6 @@ namespace ChatApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Chats");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Dit is een chat om te testen",
-                            LoggedInOnly = false,
-                            Title = "TestChat",
-                            Url = "3541b070c0",
-                            UserId = "3dede8f3-0bf4-42af-83fa-f3a52f42b70f"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Dit is een extra chatje om te testen",
-                            LoggedInOnly = false,
-                            Title = "TestChatje",
-                            Url = "a69bdcb254",
-                            UserId = "3dede8f3-0bf4-42af-83fa-f3a52f42b70f"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Dit is een extra chatttt om te testen",
-                            LoggedInOnly = false,
-                            Title = "TestChatt",
-                            Url = "0fc718dc40",
-                            UserId = "3dede8f3-0bf4-42af-83fa-f3a52f42b70f"
-                        });
                 });
 
             modelBuilder.Entity("ChatApp.Data.ChatMessage", b =>
@@ -116,48 +85,6 @@ namespace ChatApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ChatMessages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ChatId = 1,
-                            CreatedAt = new DateTime(2023, 4, 24, 21, 47, 50, 617, DateTimeKind.Utc).AddTicks(4965),
-                            Message = "Hi, dit is een test bericht, ik wil even testen wat er gebeurd zodra dit bericht vrij lang word :o",
-                            UserId = "3dede8f3-0bf4-42af-83fa-f3a52f42b70f"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ChatId = 1,
-                            CreatedAt = new DateTime(2023, 4, 24, 21, 47, 50, 617, DateTimeKind.Utc).AddTicks(4966),
-                            Message = "Waaa echt??? omgg nu moeten we de chat opvullen voor een scrollbar!",
-                            UserId = "8eb52ad0-6358-4bba-b6f8-b655302aa4fd"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ChatId = 1,
-                            CreatedAt = new DateTime(2023, 4, 24, 21, 47, 50, 617, DateTimeKind.Utc).AddTicks(4967),
-                            Message = "Hallo??? :o",
-                            UserId = "8eb52ad0-6358-4bba-b6f8-b655302aa4fd"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ChatId = 1,
-                            CreatedAt = new DateTime(2023, 4, 24, 21, 47, 50, 617, DateTimeKind.Utc).AddTicks(4967),
-                            Message = "Sorry voor de late reactie, of was dit ook een test?",
-                            UserId = "3dede8f3-0bf4-42af-83fa-f3a52f42b70f"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ChatId = 1,
-                            CreatedAt = new DateTime(2023, 4, 24, 21, 47, 50, 617, DateTimeKind.Utc).AddTicks(4968),
-                            Message = "Ohhh, I see I see :o waaaaaaaaaaaaaaaaaaaaa",
-                            UserId = "8eb52ad0-6358-4bba-b6f8-b655302aa4fd"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -379,9 +306,7 @@ namespace ChatApp.Migrations
                 {
                     b.HasOne("ChatApp.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("Chats")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("ApplicationUser");
                 });

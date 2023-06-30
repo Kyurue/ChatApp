@@ -1,0 +1,44 @@
+﻿@model List<UsersViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>User Roles</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Manage Roles</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@string.Join(" , ", user.Roles.ToList())</td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-primary" asp-controller="Users" asp-action="Manage" asp-route-userId="@user.UserId">Manage Roles</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary disabled" asp-controller="Users" asp-action="Manage" asp-route-userId="@user.UserId">Manage Roles</a>
+                    }
+                </td>
+                <td>
+                    <form method="post" asp-area="" asp-controller="Users" asp-action="Delete" asp-route-id="@user.UserId">
+                        <input type="submit" value="Delete" class="btn btn-primary" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

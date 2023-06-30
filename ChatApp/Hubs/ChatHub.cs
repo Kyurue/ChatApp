@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
+using ChatApp.Data;
+#nullable disable
 namespace ChatApp.Hubs
 {
     public class ChatHub : Hub
@@ -18,17 +20,27 @@ namespace ChatApp.Hubs
         //Add user to group 
         public Task Join(string GroupId)
         {
-            //find a way to connect to group in backend instead of frontend
             return Groups.AddToGroupAsync(Context.ConnectionId, GroupId);
         }
         //Send message in group!
         public async Task SendMessage(string message, string Groupname)
         {
-            //if user = null, get user from identity (how? I don't know yet)
             var user = _userManager.GetUserName(_httpContext.User);
-            var time = DateTime.Now;
-            await Clients.OthersInGroup(Groupname).SendAsync("ReceiveMessage", message, time, user);
-            await Clients.Caller.SendAsync("ReceiveMessage", message, time, null); ;
+            if(user != null)
+            {
+                var userId = _userManager.GetUserId(_httpContext.User);
+                var time = DateTime.Now;
+                _context.ChatMessages.Add(new Data.ChatMessage
+                {
+                    Message = message,
+                    CreatedAt = time,
+                    UserId = userId,
+                    ChatId = await _context.Chats.Where(x => x.Url == Groupname).Select(x => x.Id).SingleOrDefaultAsync()
+                });
+                await _context.SaveChangesAsync();
+                await Clients.OthersInGroup(Groupname).SendAsync("ReceiveMessage", message, time, user);
+                await Clients.Caller.SendAsync("ReceiveMessage", message, time, null);
+            }
         }
 
         //disconnect from group

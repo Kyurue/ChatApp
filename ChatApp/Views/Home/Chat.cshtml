@@ -1,5 +1,4 @@
-﻿@*TODO: make js components for the messages & add leave group button.*@
-<div class="chatContainer">
+﻿<div class="chatContainer">
     <div class="chat">
         <div class="chatHeader">
             <h1>@ViewBag.Title</h1>
@@ -7,8 +6,11 @@
         <div class="chatBody" id="chat">
         </div>
         <div class="chatFooter">
-            <input class="messageInput" type="text" id="messageInput" name="" />
-            <input class="sendButton" type="button" id="sendButton" value="Send Message" />
+            @if (ViewBag.NoUser == false)
+            {
+                <input class="messageInput" type="text" id="messageInput" name="" />
+                <input class="sendButton" type="button" id="sendButton" value="Send Message" />
+            }
         </div>
     </div>
 </div>
