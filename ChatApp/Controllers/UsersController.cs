@@ -17,6 +17,11 @@ namespace ChatApp.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
+
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns>user overview</returns>
         public async Task<IActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -32,11 +37,22 @@ namespace ChatApp.Controllers
             }
             return View(userRolesViewModel);
         }
+
+        /// <summary>
+        /// Get user roles
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>all user roles</returns>
         private async Task<List<string>> GetUserRoles(IdentityUser user)
         {
             return new List<string>(await _userManager.GetRolesAsync(user));
         }
 
+        /// <summary>
+        /// Manage user roles
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>manage view</returns>
         public async Task<IActionResult> Manage(string userId)
         {
             ViewBag.userId = userId;
@@ -67,6 +83,13 @@ namespace ChatApp.Controllers
             }
             return View(model);
         }
+
+        /// <summary>
+        /// Changes the roles that belong to a user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="userId"></param>
+        /// <returns>view/redirect</returns>
         [HttpPost]
         public async Task<IActionResult> Manage(List<ManageRolesViewModel> model, string userId)
         {
@@ -88,17 +111,23 @@ namespace ChatApp.Controllers
                 ModelState.AddModelError("", "Cannot add selected roles to user");
                 return View(model);
             }
+            TempData["success"] = "Role changed!";
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Delete a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>view/redirect</returns>
         [HttpPost, ActionName("Delete")]
-        private async Task<IActionResult> Delete(string userId)
+        public async Task<IActionResult> Delete(string? userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
-                return View("NotFound");
+                TempData["error"] = $"User with Id = {userId} cannot be found";
+                return View("/users");
             }
             await _userManager.DeleteAsync(user);
             TempData["success"] = "User deleted!";
