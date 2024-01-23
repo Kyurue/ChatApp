@@ -261,3 +261,4 @@ C:\Users\migl3\Documents\1.server\ChatApp\ChatApp\obj\Debug\net6.0\refint\ChatAp
 C:\Users\migl3\Documents\1.server\ChatApp\ChatApp\obj\Debug\net6.0\ChatApp.pdb
 C:\Users\migl3\Documents\1.server\ChatApp\ChatApp\obj\Debug\net6.0\ChatApp.genruntimeconfig.cache
 C:\Users\migl3\Documents\1.server\ChatApp\ChatApp\obj\Debug\net6.0\ref\ChatApp.dll
+C:\Users\migl3\Documents\1.server\ChatApp\ChatApp\obj\Debug\net6.0\ChatApp.sourcelink.json
