@@ -481,3 +481,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.vs/ChatApp/v17/.suo
