@@ -2,9 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ChatApp.Areas.Identity.Data;
 using ChatApp.Hubs;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using ChatApp.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using WebPWrecover.Services;
 

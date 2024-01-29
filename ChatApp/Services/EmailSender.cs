@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -16,6 +15,7 @@ public class EmailSender : IEmailSender
 
     public async Task SendEmailAsync(string toEmail, string subject, string message)
     {
+        //key in appsettings
         if (string.IsNullOrEmpty("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"))
         {
             throw new Exception("Null SendGridKey");

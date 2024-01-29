@@ -1,0 +1,42 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: 
+    - '*'
+
+jobs:
+
+  build:
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: ChatApp.sln
+      Test_Project_Path: ChatAppTests\ChatAppTests.csproj
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: Execute unit tests
+      run: dotnet test
+      working-directory: Code/ChatApp
+
+    - name: Restore the application
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
+      env:
+        Configuration: ${{ matrix.configuration }}
+      working-directory: Code/ChatApp
