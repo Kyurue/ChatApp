@@ -15,10 +15,12 @@ namespace ChatApp.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _context;
-        public UsersController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UsersController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+            _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
+
         }
 
         /// <summary>
@@ -134,10 +136,24 @@ namespace ChatApp.Controllers
             }
 
             var userChats = await _context.Chats
-            .Where(chat => chat.UserId == user.Id)
-            .ToListAsync();
+             .Where(chat => chat.UserId == userId)
+             .ToListAsync();
+            if (userChats != null)
+            {
+                // Remove the user's chats
+                _context.Chats.RemoveRange(userChats);
+                _context.SaveChanges();
+            }
 
-            _context.RemoveRange(userChats);
+            var userChatMessages = await _context.ChatMessages
+           .Where(message => message.UserId == user.Id)
+           .ToListAsync();
+            if (userChats != null)
+            {
+                // Remove the user's chats
+                _context.ChatMessages.RemoveRange(userChatMessages);
+                _context.SaveChanges();
+            }
 
             await _userManager.DeleteAsync(user);
             TempData["success"] = "User deleted!";

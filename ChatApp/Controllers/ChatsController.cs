@@ -63,10 +63,6 @@ namespace ChatApp.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var chat = await _context.Chats.FindAsync(id);
-            if (chat != null)
-            {
-                _context.Chats.Remove(chat);
-            }
             
             //get userrole of logged in user as string
             var user = await _userManager.GetUserAsync(User);
