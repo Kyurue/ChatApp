@@ -12,12 +12,14 @@ namespace ChatApp.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly Logger<ChatsController> _logger;
 
-        public ChatsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public ChatsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, Logger<ChatsController> logger)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -66,23 +68,27 @@ namespace ChatApp.Controllers
             
             //get userrole of logged in user as string
             var user = await _userManager.GetUserAsync(User);
-
-            if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Moderator") || user.Id == chat.UserId)
+            if(chat != null)
             {
-                if (_context.Chats == null)
+                if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "Moderator") || user.Id == chat.UserId)
                 {
-                    return Problem("Entity set 'ApplicationDbContext.Chats'  is null.");
-                }
-                if (chat != null)
-                {
-                    _context.Chats.Remove(chat);
-                }
+                    if (_context.Chats == null)
+                    {
+                        return Problem("Entity set 'ApplicationDbContext.Chats' is null.");
+                    }
+                    if (chat != null)
+                    {
+                        _context.Chats.Remove(chat);
+                    }
 
-                await _context.SaveChangesAsync();
-                TempData["success"] = "Chat deleted!";
-                return Redirect("/");
+                    await _context.SaveChangesAsync();
+                    TempData["success"] = "Chat successfully deleted!";
+                    _logger.LogInformation($"{user.Id} deleted chat {id}");
+                    return Redirect("/");
+                }
             }
             TempData["error"] = "You do not have the right role to perform this action!";
+            _logger.LogWarning($"{user.UserName} tried to delete chat {id}");
             return Redirect("/");
         }
 

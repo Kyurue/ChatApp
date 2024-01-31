@@ -49,16 +49,19 @@ connection.start().then(async () => {
 });
 
 //Send message
-document.getElementById("sendButton").addEventListener("click", function (event) {    
-    const message = document.getElementById("messageInput").value;
-    if (isEmptyOrSpaces(message)) return;
-    connection.invoke("SendMessage", message, groupId).catch(function (err) {
-        return console.error(err.toString());
-    });
-    document.getElementById("messageInput").value = "";
+var sendButton = document.getElementById("sendButton");
+if (sendButton) {
+    sendButton.addEventListener("click", function (event) {
+        const message = document.getElementById("messageInput").value;
+        if (isEmptyOrSpaces(message)) return;
+        connection.invoke("SendMessage", message, groupId).catch(function (err) {
+            return console.error(err.toString());
+        });
+        document.getElementById("messageInput").value = "";
 
-    event.preventDefault();
-});
+        event.preventDefault();
+    });
+}
 
 function isEmptyOrSpaces(str) {
     return str === null || str.match(/^ *$/) !== null;
