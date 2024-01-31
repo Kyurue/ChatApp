@@ -4,6 +4,7 @@ using ChatApp.Areas.Identity.Data;
 using ChatApp.Hubs;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using WebPWrecover.Services;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -58,12 +59,16 @@ app.UseAuthorization();
 app.Use(async (context, next) =>
 {
     context.Response.Headers.Add("X-Frame-Options", "DENY");
+
+    context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+
     context.Response.Headers.Add("Content-Security-Policy",
          "default-src 'self'; " +
-         "script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/ https://your-signalr-hub-url; " +
+         "script-src 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/ https://your-signalr-hub-url; " +
          "style-src 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/ 'unsafe-inline'; " +
          "img-src 'self' data:; " +
          "connect-src 'self' wss://localhost:44310 http://localhost:53174 https://localhost:53174 ws://localhost:53174 wss://mishunini.hbo-ict.org http://mishunini.hbo-ict.org https://mishunini.hbo-ict.org ws://mishunini.hbo-ict.org; "
+
     );
     await next();
 });

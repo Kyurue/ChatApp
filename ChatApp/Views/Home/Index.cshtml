@@ -57,6 +57,7 @@
                         @if (User.Identity != null && User.Identity.IsAuthenticated) 
                         {
                             <form method="post" asp-area="" asp-controller="Chats" asp-action="Delete" asp-route-id="@item.Id">
+                                @Html.AntiForgeryToken()
                             @if (User.IsInRole("Moderator") || User.IsInRole("Admin") || @ViewBag.UserId == item.UserId)
                             {
                                 <input type="submit" value="Delete" class="btn btn-primary"/>

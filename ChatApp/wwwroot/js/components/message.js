@@ -22,11 +22,9 @@ class Message extends HTMLElement {
     }
 
     connectedCallback() {
-        console.log('message: connected to DOM');
     }
 
     disconnectedCallback(){
-        console.log('message: disconnected from DOM');
     }
 
     applyTemplate() {
