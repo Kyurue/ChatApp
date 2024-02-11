@@ -22,7 +22,9 @@ namespace ChatApp.Data
         public bool LoggedInOnly { get; set; } = false;
 
         [InverseProperty("Chat")]
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         public virtual ICollection<ChatMessage>? ChatMessages { get; set; }
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
         [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser ApplicationUser { get; set; }

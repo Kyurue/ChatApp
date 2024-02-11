@@ -52,7 +52,7 @@ namespace ChatApp.Controllers
             {
                 Message = x.Message,
                 CreatedAt = x.CreatedAt,
-                Username = (users.GetValueOrDefault(x.UserId)?.UserName == username && username != null) ? null : users.GetValueOrDefault(x.UserId)?.UserName,
+                Username = (users!.GetValueOrDefault(x.UserId)?.UserName == username && username != null) ? null : users!.GetValueOrDefault(x.UserId)?.UserName,
             });
 
             return Ok(viewModels);

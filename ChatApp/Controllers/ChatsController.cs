@@ -12,9 +12,9 @@ namespace ChatApp.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly Logger<ChatsController> _logger;
+        private readonly ILogger<ChatsController> _logger;
 
-        public ChatsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, Logger<ChatsController> logger)
+        public ChatsController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, ILogger<ChatsController> logger)
         {
             _context = context;
             _userManager = userManager;
@@ -83,12 +83,12 @@ namespace ChatApp.Controllers
 
                     await _context.SaveChangesAsync();
                     TempData["success"] = "Chat successfully deleted!";
-                    _logger.LogInformation($"{user.Id} deleted chat {id}");
+                    _logger.LogInformation($"chat {id} has been deleted");
                     return Redirect("/");
                 }
             }
-            TempData["error"] = "You do not have the right role to perform this action!";
-            _logger.LogWarning($"{user.UserName} tried to delete chat {id}");
+            TempData["error"] = "You do not have the right permissions to perform this action!";
+            _logger.LogWarning($"A unauthorized tried to delete chat {id}");
             return Redirect("/");
         }
 
