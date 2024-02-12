@@ -9,8 +9,8 @@ namespace ChatApp.Areas.Identity.Data;
 
 public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
-    public DbSet<Chat> Chats { get; set; }
-    public DbSet<ChatMessage> ChatMessages { get; set; }
+    public virtual DbSet<Chat> Chats { get; set; }
+    public virtual DbSet<ChatMessage> ChatMessages { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {

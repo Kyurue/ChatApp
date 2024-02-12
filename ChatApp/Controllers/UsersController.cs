@@ -1,9 +1,11 @@
-﻿using ChatApp.Models;
+﻿using ChatApp.Areas.Identity.Data;
+using ChatApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Runtime.CompilerServices;
 
 namespace ChatApp.Controllers
 {
@@ -12,10 +14,13 @@ namespace ChatApp.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public UsersController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly ApplicationDbContext _context;
+        public UsersController(ApplicationDbContext context, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+            _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
+
         }
 
         /// <summary>
@@ -129,6 +134,27 @@ namespace ChatApp.Controllers
                 TempData["error"] = $"User with Id = {userId} cannot be found";
                 return View("/users");
             }
+
+            var userChats = await _context.Chats
+             .Where(chat => chat.UserId == userId)
+             .ToListAsync();
+            if (userChats != null)
+            {
+                // Remove the user's chats
+                _context.Chats.RemoveRange(userChats);
+                _context.SaveChanges();
+            }
+
+            var userChatMessages = await _context.ChatMessages
+           .Where(message => message.UserId == user.Id)
+           .ToListAsync();
+            if (userChats != null)
+            {
+                // Remove the user's chats
+                _context.ChatMessages.RemoveRange(userChatMessages);
+                _context.SaveChanges();
+            }
+
             await _userManager.DeleteAsync(user);
             TempData["success"] = "User deleted!";
             return Redirect("/users");

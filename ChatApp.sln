@@ -5,9 +5,14 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatApp", "ChatApp\ChatApp.csproj", "{9834A169-402B-405E-BEE7-74196106429D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAppTests", "ChatAppTests\ChatAppTests.csproj", "{4C351543-FD2C-49CC-A14D-54CB6AC02386}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatAppTests", "ChatAppTests\ChatAppTests.csproj", "{4C351543-FD2C-49CC-A14D-54CB6AC02386}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9834A169-402B-405E-BEE7-74196106429D} = {9834A169-402B-405E-BEE7-74196106429D}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{11DFA452-23B2-408A-AEDE-3F9BF9F87B88}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global

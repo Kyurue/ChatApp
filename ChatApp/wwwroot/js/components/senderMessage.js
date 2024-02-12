@@ -20,11 +20,9 @@ class SenderMessage extends HTMLElement {
     }
 
     connectedCallback() {
-        console.log('sendermessage: connected to DOM');
     }
 
     disconnectedCallback(){
-        console.log('sendermessage: disconnected from DOM');
     }
 
     applyTemplate() {
